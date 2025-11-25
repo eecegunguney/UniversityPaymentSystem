@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="UniversityPaymentSystem.Api/UniversityPaymentSystem.Api.csproj" />
+  <Project Path="UniversityPaymentSystem.Application/UniversityPaymentSystem.Application.csproj" />
+  <Project Path="UniversityPaymentSystem.Domain/UniversityPaymentSystem.Domain.csproj" />
+  <Project Path="UniversityPaymentSystem.Infrastructure/UniversityPaymentSystem.Infrastructure.csproj" />
+</Solution>
