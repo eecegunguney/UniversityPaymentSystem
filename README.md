@@ -90,6 +90,8 @@ UniversityPaymentSystem/
 
 ## Deployment
 [Swagger](https://universitypaymentsystem-hka6d7b5gvf4c7c4.francecentral-01.azurewebsites.net/index.html)
+username: Admin            &  username: Banking
+password: password         &  password: password
 
 ## Source Code
 [Github](https://github.com/eecegunguney/UniversityPaymentSystem)
