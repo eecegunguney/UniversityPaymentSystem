@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using UniversityPaymentSystem.Application.Interfaces;
 using UniversityPaymentSystem.Domain.DTOs;
 using UniversityPaymentSystem.Domain.Entities;
-using Microsoft.AspNetCore.Http; 
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
 
 
 [ApiController]
@@ -11,16 +12,33 @@ using Microsoft.AspNetCore.Http;
 public class TuitionController : ControllerBase
 {
     private readonly ITuitionService _tuitionService;
-    private readonly ILogger<TuitionController> _logger; 
+    private readonly ILogger<TuitionController> _logger;
+    private readonly IMemoryCache _cache;
 
-    public TuitionController(ITuitionService tuitionService, ILogger<TuitionController> logger)
+    public TuitionController(ITuitionService tuitionService, ILogger<TuitionController> logger, IMemoryCache memoryCache)
     {
         _tuitionService = tuitionService;
         _logger = logger;
+        _cache = memoryCache;
     }
 
-    
-    [HttpGet("query")]
+    [HttpPost("admin/student/add")]
+    [Authorize(Roles = "Admin")] 
+    [ProducesResponseType(typeof(string), 200)]
+    [ProducesResponseType(401)]
+    public async Task<IActionResult> AddStudent([FromBody] AddStudentRequestDto request)
+    {
+        var status = await _tuitionService.AddStudentAsync(request);
+
+        if (status.StartsWith("ERROR"))
+        {
+            return BadRequest(status);
+        }
+        return Ok(new { TransactionStatus = status });
+    }
+
+
+    [HttpGet("mobileApp/query")]
     [ProducesResponseType(typeof(TuitionQueryResponseDto), 200)]
     [ProducesResponseType(429)]
     [AllowAnonymous]
@@ -33,8 +51,7 @@ public class TuitionController : ControllerBase
         {
             return BadRequest("Student Number is required.");
         }
-
-        
+       
 
         var result = await _tuitionService.QueryTuitionStatusAsync(studentNo);
 
@@ -44,10 +61,27 @@ public class TuitionController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("bankingApp/query")]
+    [Authorize(Roles = "Banking")]
+    [ProducesResponseType(typeof(TuitionQueryResponseDto), 200)]
+    [ProducesResponseType(401)]
+    public async Task<IActionResult> QueryTuitionForBanking([FromQuery] string studentNo)
+    {
+        _logger.LogInformation("QueryTuitionForBanking - Request: {StudentNo}", studentNo);
 
-    [HttpPost("pay")]
+        if (string.IsNullOrEmpty(studentNo))
+        {
+            return BadRequest("Student Number is required.");
+        }
+
+
+        var result = await _tuitionService.QueryTuitionStatusAsync(studentNo);
+
+        return Ok(result);
+    }
+
+    [HttpPost("bankingApp/pay")]
     [ProducesResponseType(typeof(string), 200)]
-    [AllowAnonymous]
     public async Task<IActionResult> PayTuition([FromBody] PayTuitionRequestDto request)
     {
         
@@ -82,6 +116,7 @@ public class TuitionController : ControllerBase
     [HttpPost("admin/add/batch")]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(string), 200)]
+    [ProducesResponseType(401)]
     public async Task<IActionResult> AddTuitionBatch([FromForm] AddTuitionBatchRequest request)
     {
         
@@ -101,31 +136,22 @@ public class TuitionController : ControllerBase
     [HttpGet("admin/unpaid")]
     [Authorize(Roles = "Admin")] 
     [ProducesResponseType(typeof(List<Student>), 200)]
-    public async Task<IActionResult> GetUnpaidStudents([FromQuery] string term, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    [ProducesResponseType(401)]
+    public async Task<IActionResult> GetUnpaidStudents([FromQuery] string term, [FromQuery] int pageNumber , [FromQuery] int pageSize)
     {
 
 
         var students = await _tuitionService.GetUnpaidTuitionStudentsAsync(term);
 
         
-        var pagedStudents = students.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+       
 
 
-        _logger.LogInformation("UnpaidStudents - Count: {Count}", pagedStudents.Count);
+        _logger.LogInformation("UnpaidStudents - Count: {Count}", students.Count);
 
-        return Ok(pagedStudents);
+        return Ok(students);
     }
 
    
-    [HttpGet("gpa")]
-    [Authorize(Roles ="Admin")] 
-    public async Task<IActionResult> RetrieveGPA([FromQuery] string tcKimlik)
-    {
-        if (string.IsNullOrEmpty(tcKimlik))
-        {
-            return BadRequest("TC Kimlik No is required.");
-        }
-        var gpa = await _tuitionService.RetrieveStudentGPAStatusAsync(tcKimlik);
-        return Ok(new { GPA = gpa });
-    }
+
 }

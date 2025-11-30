@@ -2,6 +2,7 @@ namespace UniversityPaymentSystem.Domain.Entities
 {
     public class TuitionPayment
     {
+
         public int Id { get; set; }
 
         public int StudentId { get; set; }

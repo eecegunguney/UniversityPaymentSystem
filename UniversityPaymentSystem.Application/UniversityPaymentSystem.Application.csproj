@@ -2,10 +2,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UniversityPaymentSystem.Domain\UniversityPaymentSystem.Domain.csproj" />
-    <ProjectReference Include="..\UniversityPaymentSystem.Infrastructure\UniversityPaymentSystem.Infrastructure.csproj" />
+	<ProjectReference Include="..\UniversityPaymentSystem.Infrastructure\UniversityPaymentSystem.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
   </ItemGroup>
 

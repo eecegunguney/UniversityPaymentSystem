@@ -8,7 +8,8 @@ namespace UniversityPaymentSystem.Application.Interfaces
 
     public interface ITuitionService
     {
-       
+        Task<string> AddStudentAsync(AddStudentRequestDto request);
+
         Task<TuitionQueryResponseDto> QueryTuitionStatusAsync(string studentNo);
 
        
@@ -24,6 +25,6 @@ namespace UniversityPaymentSystem.Application.Interfaces
         Task<List<Student>> GetUnpaidTuitionStudentsAsync(string term);
 
         
-        Task<decimal> RetrieveStudentGPAStatusAsync(string tcKimlik);
+        
     }
 }

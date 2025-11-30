@@ -1,14 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace UniversityPaymentSystem.Domain.DTOs
 {
-    public class AddTuitionRequestDto
+    public class AddStudentRequestDto
     {
         [Required]
         public string StudentNo { get; set; }
         [Required]
-        public string Term { get; set; }
+        public string FullName { get; set; }
         [Required]
-        public decimal TuitionAmount { get; set; }
+        public string TCKimlik { get; set; }
     }
 }

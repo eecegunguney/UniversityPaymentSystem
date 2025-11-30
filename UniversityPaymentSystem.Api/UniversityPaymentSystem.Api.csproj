@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -24,6 +24,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UniversityPaymentSystem.Application\UniversityPaymentSystem.Application.csproj" />
+    <ProjectReference Include="..\UniversityPaymentSystem.Domain\UniversityPaymentSystem.Domain.csproj" />
+    <ProjectReference Include="..\UniversityPaymentSystem.Infrastructure\UniversityPaymentSystem.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

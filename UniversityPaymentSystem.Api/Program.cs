@@ -7,21 +7,12 @@ using Microsoft.OpenApi;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
-
-
-
-
-
-
-
-
 using Swashbuckle.AspNetCore.Filters;
-
 using Microsoft.AspNetCore.Http;
 
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddMemoryCache();
 
 
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
@@ -32,8 +23,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 
-builder.Services.AddScoped<ITuitionService, TuitionService>();
 
+builder.Services.AddScoped<ITuitionService, TuitionService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);
 
@@ -66,7 +58,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "University Tuition API", Version = "v1" });
-
+    options.DocumentFilter<GatewayUrlDocumentFilter>();
 
     options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
     {
@@ -84,11 +76,21 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 
-if (app.Environment.IsDevelopment())
+
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "UTPS API v1");
+
+    
+    c.RoutePrefix = string.Empty;
+
+    
+    c.DocumentTitle = "UTPS API - Gateway";
+});
+
 
 app.UseHttpsRedirection();
 
