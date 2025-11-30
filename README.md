@@ -83,6 +83,7 @@ UniversityPaymentSystem/
 
 
 ## Data Model
+<img width="406" height="288" alt="image" src="https://github.com/user-attachments/assets/022382ee-bc06-454a-bcf9-1e30f4cd54a2" />
 
 ## Presentation Video
 [Drive]()
