@@ -15,7 +15,7 @@ This UTPS API allows
 Tech stacks I use when developing
 * **Framework:** ASP.NET Core Web API (.NET 10)
 * **Language:** C#
-* **Database:** Azure PostgreSQL Flexiable Service
+* **Database:** Azure PostgreSQL 
 * **API Documentation:** Swagger UI
 * **Deployment:** Azure App Service
 * **API Gateway:** Azure API Management
