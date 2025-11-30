@@ -5,7 +5,7 @@ using UniversityPaymentSystem.Domain.DTOs;
 namespace UniversityPaymentSystem.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")] 
+    [Route("api/v1/[controller]")] 
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
