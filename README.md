@@ -86,7 +86,7 @@ UniversityPaymentSystem/
 <img width="406" height="288" alt="image" src="https://github.com/user-attachments/assets/022382ee-bc06-454a-bcf9-1e30f4cd54a2" />
 
 ## Presentation Video
-[Drive](https://drive.google.com/file/d/1JcUGM0_0CrpekZefZyfRR77YzZZI5Yvo/view?usp=sharing)
+[Drive](https://drive.google.com/file/d/1CY7oDNXk3BoxtNc9cbJ2wq4a6QeWXbx4/view?usp=sharing)
 
 ## Deployment
 [Swagger](https://universitypaymentsystem-hka6d7b5gvf4c7c4.francecentral-01.azurewebsites.net/index.html)
