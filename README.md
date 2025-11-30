@@ -67,20 +67,25 @@ UniversityPaymentSystem/
 │       └── IStudentRepository.cs
 │       └── StudentRepository.cs
 │
-└── Program.cs
 ```
 
 ## API Endpoints 
-| **Method** |           **Endpoint**            |          **Parameters**          |    **API Response**    |                **Description**                    | 
-|------------|-----------------------------------|----------------------------------|------------------------|---------------------------------------------------|
-|    POST    |       /api/v1/Auth/login          |       Username,password          |         Token          |     To get tokens to implement authentication     |
-|    POST    | /api/v1/Tuition/admin/student/add | Student No, Full Name, TC number |   Transaction Status   |          To add a student to the database         |
-|    GET     |  /api/v1/Tuition/mobileApp/query  |            Student No            | Tuition Total, Balance |    Returns tuition amount and current balance     |
-|    GET     |  /api/v1/Tuition/bankingApp/query |            Student No            | Tuition Total, Balance |    Returns tuition amount and current balance     |
-|    POST    |  /api/v1/Tuition/bankingApp/pay   |     Student No, Term, Amount     |     Payment Status     |          Records payment for given term           |
-|    POST    |    /api/v1/Tuition/admin/add      | Student No, Term, Tuition Amount |   Transaction Status   |   Adds a tuition amount for given student term    |
-|    POST    |  /api/v1/Tuition/admin/add/batch  |  csv files of Student No, Term   |   Transaction Status   | Adds a tuition amount from a .csv of student data |
-|    GET     |   /api/v1/Tuition/admin/unpaid    |   Term, Page Number, Page Size   |          List          |   List of students with unpaid tuition amounts    |
+| **Method** |           **Endpoint**            |          **Parameters**          |    **API Response**    | **Authentication**  | **Paging**  |                **Description**                    | 
+|------------|-----------------------------------|----------------------------------|------------------------|---------------------|-------------|---------------------------------------------------|
+|    POST    |       /api/v1/Auth/login          |       Username,password          |         Token          |         No          |     No      |     To get tokens to implement authentication     |
+|    POST    | /api/v1/Tuition/admin/student/add | Student No, Full Name, TC number |   Transaction Status   |         Yes         |     No      |          To add a student to the database         |
+|    GET     |  /api/v1/Tuition/mobileApp/query  |            Student No            | Tuition Total, Balance |         No          |     No      |    Returns tuition amount and current balance     |
+|    GET     |  /api/v1/Tuition/bankingApp/query |            Student No            | Tuition Total, Balance |         Yes         |     No      |    Returns tuition amount and current balance     |
+|    POST    |  /api/v1/Tuition/bankingApp/pay   |     Student No, Term, Amount     |     Payment Status     |         No          |     No      |          Records payment for given term           |
+|    POST    |    /api/v1/Tuition/admin/add      | Student No, Term, Tuition Amount |   Transaction Status   |         Yes         |     No      |   Adds a tuition amount for given student term    |
+|    POST    |  /api/v1/Tuition/admin/add/batch  |  csv files of Student No, Term   |   Transaction Status   |         Yes         |     No      | Adds a tuition amount from a .csv of student data |
+|    GET     |   /api/v1/Tuition/admin/unpaid    |   Term, Page Number, Page Size   |          List          |         Yes         |     Yes     |   List of students with unpaid tuition amounts    |
+
+
+## Data Model
+
+## Presentation Video
+[Drive]()
 
 ## Deployment
 [Swagger](https://universitypaymentsystem-hka6d7b5gvf4c7c4.francecentral-01.azurewebsites.net/index.html)
